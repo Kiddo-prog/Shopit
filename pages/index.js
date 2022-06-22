@@ -6,6 +6,8 @@ import commerce from "../lib/commerce";
 import ProductList from "../components/ProductList";
 import CategoryList from "../components/CategoryList";
 
+import Header from '../components/Header';
+
 export default function Home({ merchant, categories, products }) {
   return (
     <div className={styles.container}>
@@ -16,7 +18,8 @@ export default function Home({ merchant, categories, products }) {
       </Head>
 
       <React.Fragment>
-      <h1>{merchant.business_name}</h1>
+      <Header />
+      {/* <h1>{merchant.business_name}</h1>
 
         <h3>
           <Link href="/categories">
@@ -30,7 +33,7 @@ export default function Home({ merchant, categories, products }) {
           <Link href="/products">
             <a>Products</a>
           </Link>
-        </h3>
+        </h3> */}
         <ProductList products={products} />
     </React.Fragment>
     </div>
