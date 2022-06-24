@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useState } from 'react'
 import { StarIcon } from '@heroicons/react/solid'
 import { RadioGroup } from '@headlessui/react'
+import { useCartDispatch } from "../../context/cart";
 
 export async function getStaticProps({ params }) {
   const { permalink } = params;
@@ -100,6 +101,11 @@ function classNames(...classes) {
 }
 
 export default function ProductPage({ product }) {
+  const setCart = useCartDispatch()
+
+  const addToCart = () => commerce.cart.add(product.id)
+  .then((cart) => setCart(cart))
+  .catch((err) => console.log(err))
   
   const [selectedColor, setSelectedColor] = useState(products.colors[0])
   const [selectedSize, setSelectedSize] = useState(products.sizes[2])
@@ -156,7 +162,7 @@ export default function ProductPage({ product }) {
               </div>
             </div>
 
-            <form className="mt-10">
+            <form className="mt-10" action="">
               {/* Colors */}
               <div>
                 <h3 className="text-sm text-gray-900 font-medium">Color</h3>
@@ -256,7 +262,7 @@ export default function ProductPage({ product }) {
               </div>
 
               <button
-                type="submit"
+              onClick={addToCart}
                 className="mt-10 w-full bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
               >
                 Add to bag
