@@ -162,7 +162,7 @@ export default function ProductPage({ product }) {
               </div>
             </div>
 
-            <form className="mt-10" action="">
+            {/* <form className="mt-10" action=""> */}
               {/* Colors */}
               <div>
                 <h3 className="text-sm text-gray-900 font-medium">Color</h3>
@@ -267,7 +267,7 @@ export default function ProductPage({ product }) {
               >
                 Add to bag
               </button>
-            </form>
+            {/* </form> */}
           </div>
 
           <div className="py-10 lg:pt-6 lg:pb-16 lg:col-start-1 lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8">

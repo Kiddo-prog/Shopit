@@ -2,6 +2,9 @@ import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { ShoppingBagIcon, MenuIcon, XIcon } from '@heroicons/react/outline'
 
+import { useCartState } from '../context/cart'
+import commerce from '../lib/commerce'
+
 import Link from 'next/link'
 import Image from 'next/image'
 
@@ -17,6 +20,7 @@ function classNames(...classes) {
 }
 
 export default function Header() {
+  const { total_items } = useCartState()
   return (
     <Disclosure as="nav" className="bg-gray-800">
       {({ open }) => (
@@ -74,8 +78,13 @@ export default function Header() {
                   type="button"
                   className="bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
                 >
-                  <span className="sr-only">View notifications</span>
-                  <ShoppingBagIcon className="h-6 w-6" aria-hidden="true" />
+                  <Link href='/cart'>
+                    <a className='flex justify-center'>
+                      <span className="sr-only">View notifications</span>
+                      <ShoppingBagIcon className="h-6 w-6" aria-hidden="true" />
+                      <p>{total_items}</p>
+                    </a>
+                  </Link>
                 </button>
 
                 {/* Profile dropdown */}
