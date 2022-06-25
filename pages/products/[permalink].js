@@ -88,7 +88,7 @@ const products = {
     'Ultra-soft 100% cotton',
   ],
   details:
-    'The 6-Pack includes two black, two white, and two heather gray Basic Tees. Sign up for our subscription service and be the first to get new, exciting colors, like our upcoming "Charcoal Gray" limited release.',
+    'The 6-Pack includes two black, two white, two blue and two heather gray Basic Tees. Sign up for our subscription service and be the first to get new, exciting colors, like our upcoming "Charcoal Gray" limited release.',
 }
 const reviews = { href: '#', average: 4, totalCount: 117 }
 
