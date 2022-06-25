@@ -8,6 +8,9 @@ import { RadioGroup } from '@headlessui/react'
 import { useCartDispatch } from "../../context/cart";
 import Header from "../../components/Header";
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 export async function getStaticProps({ params }) {
   const { permalink } = params;
 
@@ -35,14 +38,6 @@ export async function getStaticPaths() {
   };
 }
 
-// export default function ProductPage({ product }) {
-//   return (
-//     <React.Fragment>
-//       <h1>{product.name}</h1>
-//       <p>{product.price.formatted_with_symbol}</p>
-//     </React.Fragment>
-//   );
-// }
 const products = {
   name: 'Basic Tee 6-Pack',
   price: '$192',
