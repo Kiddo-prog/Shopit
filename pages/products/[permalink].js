@@ -99,8 +99,22 @@ function classNames(...classes) {
 export default function ProductPage({ product }) {
   const { setCart } = useCartDispatch()
 
+  // const addNotification = () => {
+  //   toast('Item added to cart!', {
+  //     position: "top-left",
+  //     autoClose: 5000,
+  //     hideProgressBar: false,
+  //     closeOnClick: true,
+  //     pauseOnHover: true,
+  //     draggable: true,
+  //     progress: undefined,
+  //     });
+  // }
+
   const addToCart = () => commerce.cart.add(product.id)
-  .then((cart) => setCart(cart))
+  .then((cart) => {
+    setCart(cart);
+  })
   .catch((err) => console.log(err))
   
   const [selectedColor, setSelectedColor] = useState(products.colors[0])
