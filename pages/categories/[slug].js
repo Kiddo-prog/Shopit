@@ -4,6 +4,9 @@ import ProductList from "../../components/ProductList";
 
 
 export default function CategoryPage({ category, products }) {
+  if(!category){
+    return null
+  }
     return (
       <React.Fragment>
         <h1>{category.name}</h1>
