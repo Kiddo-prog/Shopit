@@ -6,6 +6,7 @@ import { useState } from 'react'
 import { StarIcon } from '@heroicons/react/solid'
 import { RadioGroup } from '@headlessui/react'
 import { useCartDispatch } from "../../context/cart";
+import Header from "../../components/Header";
 
 export async function getStaticProps({ params }) {
   const { permalink } = params;
@@ -101,7 +102,7 @@ function classNames(...classes) {
 }
 
 export default function ProductPage({ product }) {
-  const setCart = useCartDispatch()
+  const { setCart } = useCartDispatch()
 
   const addToCart = () => commerce.cart.add(product.id)
   .then((cart) => setCart(cart))
@@ -113,6 +114,7 @@ export default function ProductPage({ product }) {
   
   return (
     <div className="bg-white">
+      <Header />
       <div className="pt-6">
 
         {/* Image gallery */}
@@ -162,7 +164,7 @@ export default function ProductPage({ product }) {
               </div>
             </div>
 
-            {/* <form className="mt-10" action=""> */}
+            <form className="mt-10" action="">
               {/* Colors */}
               <div>
                 <h3 className="text-sm text-gray-900 font-medium">Color</h3>
@@ -267,7 +269,7 @@ export default function ProductPage({ product }) {
               >
                 Add to bag
               </button>
-            {/* </form> */}
+            </form>
           </div>
 
           <div className="py-10 lg:pt-6 lg:pb-16 lg:col-start-1 lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8">

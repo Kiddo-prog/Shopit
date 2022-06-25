@@ -3,15 +3,81 @@ import { Fragment, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { XIcon } from '@heroicons/react/outline'
 
+import commerce from '../lib/commerce'
+
 import Image from 'next/image'
 import Link from 'next/link'
 
 import { useRouter } from "next/router";
+import { useCartDispatch } from "../context/cart";
+
+export const CartItem = ({ id, image, quantity, name, permalink, price }) => {
+
+    const { setCart } = useCartDispatch()
+
+    const removeItem = () => {commerce.cart.remove(id).then(handleUpdateCart)}
+
+    const handleUpdateCart = ({cart}) => setCart(cart)
+    const decrementQuantity = () => {
+        quantity > 1 ? commerce.cart.update(id, { quantity: quantity - 1 }).then(handleUpdateCart) : removeItem();
+    }
+
+    const incrementQuantity = () => { commerce.cart.update(id, {quantity: quantity + 1}).then(handleUpdateCart)
+    }
+
+    return(
+        <div>
+            <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
+                <Image
+                    src={image.url}
+                    alt={'Product-Description'}
+                    height={250}
+                    width={250}
+                    className="h-full w-full object-cover object-center"
+                />
+            </div>
+  
+            <div className="ml-4 flex flex-1 flex-col">
+                <div>
+                    <div className="flex justify-between text-base font-medium text-gray-900">
+                        <h3>
+                            <Link href={permalink}>
+                                <a> {name} </a>
+                            </Link>
+                        </h3>
+                        
+                        <p className="ml-4">{price.formatted_with_symbol}</p>
+                    </div>
+                                      {/* <p className="mt-1 text-sm text-gray-500">{product.color}</p> */}
+                </div>
+                                    
+                <div className="flex flex-1 items-end justify-between text-sm">
+                    <p className="text-gray-500">Qty {quantity}</p>
+  
+                    <button type='button' className='font-medium' onClick={incrementQuantity}>+</button>
+                    <button type='button' className='font-medium' onClick={decrementQuantity}>-</button>
+                    <div className="flex">
+                        <button
+                            className="font-medium text-indigo-600 hover:text-indigo-500" 
+                            onClick={removeItem}
+                        >
+                            Remove
+                        </button>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    )
+}
+
 
 export default function CartPage() {
     const router = useRouter()
     const [open, setOpen] = useState(true)
     const {line_items, subtotal} = useCartState()
+    const setCart = useCartDispatch()
+  
 
     // console.log(line_items, subtotal)
   
@@ -62,43 +128,10 @@ export default function CartPage() {
                         <div className="mt-8">
                           <div className="flow-root">
                             <ul role="list" className="-my-6 divide-y divide-gray-200">
-                              {line_items.map((product) => (
+                            { line_items.length === 0  ? <p className="font-xl text-center mt-10">Your cart is empty</p> :
+                              line_items.map((product) => (
                                 <li key={product.id} className="flex py-6">
-                                  <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
-                                    <Image
-                                      src={product.image.url}
-                                      alt={'Product-Description'}
-                                      height={250}
-                                      width={250}
-                                      className="h-full w-full object-cover object-center"
-                                    />
-                                  </div>
-  
-                                  <div className="ml-4 flex flex-1 flex-col">
-                                    <div>
-                                      <div className="flex justify-between text-base font-medium text-gray-900">
-                                        <h3>
-                                            <Link href={product.permalink}>
-                                                <a> {product.name} </a>
-                                            </Link>
-                                        </h3>
-                                        <p className="ml-4">{product.price.formatted_with_symbol}</p>
-                                      </div>
-                                      {/* <p className="mt-1 text-sm text-gray-500">{product.color}</p> */}
-                                    </div>
-                                    <div className="flex flex-1 items-end justify-between text-sm">
-                                      <p className="text-gray-500">Qty {product.quantity}</p>
-  
-                                      <div className="flex">
-                                        <button
-                                          type="button"
-                                          className="font-medium text-indigo-600 hover:text-indigo-500"
-                                        >
-                                          Remove
-                                        </button>
-                                      </div>
-                                    </div>
-                                  </div>
+                                    <CartItem {...product} />
                                 </li>
                               ))}
                             </ul>
